@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import api from '../services/api'
 import Loading from 'react-loading'
+
+import * as download from '../utils/download'
+import api from '../services/api'
 
 type ProgressData = {
   progress: number
@@ -8,7 +10,7 @@ type ProgressData = {
   transferred: string
   estimated: string
 }
-// https://www.youtube.com/watch?v=_LLCz1FCWrY
+
 export default function App() {
   const [url, setUrl] = useState('')
   const [progress, setProgress] = useState(null as unknown as ProgressData)
@@ -16,28 +18,24 @@ export default function App() {
   const [format, setFormat] = useState('mp3' as 'mp3' | 'mp4')
 
   async function sendURL() {
-    if (isLoading) return
-
-    window.location.replace('http://localhost:3000/api' + '/download')
+    if (isLoading || !url) return
     setIsLoading(true)
 
     try {
-      await api.get('/download', {
+      const response = await api.get('/download', {
+        responseType: 'blob',
         params: {
-          url: 'https://www.youtube.com/watch?v=_LLCz1FCWrY',
+          url,
         },
       })
+      if (format === 'mp3') {
+        download.toMP3(response.data)
+      } else {
+        download.toMP4(response.data)
+      }
     } finally {
       setIsLoading(false)
     }
-
-    // window.Main.sendMessage(`${url}||${format}`)
-    // setIsLoading(true)
-    // setProgress(null as unknown as ProgressData)
-    // window.Main.on('URL:PROGRESS', data => {
-    //   setIsLoading(false)
-    //   setProgress(data)
-    // })
   }
 
   return (
