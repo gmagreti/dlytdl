@@ -9,7 +9,7 @@ Download youtube video on mp3
 ## Features
 
 - [x] Loading
-- [ ] Progress
+- [x] Progress
 - [ ] Information
 - [x] MP3 or MP4
 - [ ] Thumbnail

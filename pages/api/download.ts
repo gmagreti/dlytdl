@@ -1,12 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { Server } from 'socket.io'
 import ytdl from 'ytdl-core'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
+    const io = (res?.socket as any).server?.io as Server
     const url = req.query.url as string
     const ext = req.query.ext as string
-    const [http, urlID] = url?.split('watch?v=')
+    const [_, urlID] = url?.split('watch?v=')
 
     let startTime: number
 
@@ -20,8 +22,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       stream.on('progress', (chunkLength, downloaded, total) => {
         const percent = downloaded / total
         const downloadedSeconds = (Date.now() - startTime) / 1000
-        const estimatedDownloadTime = downloadedSeconds / percent - downloadedSeconds
-        console.log(percent)
+        const estimated = downloadedSeconds / percent - downloadedSeconds
+
+        io.emit('progress', {
+          percent,
+          downloadedSeconds,
+          estimated,
+        })
       })
 
       stream.pipe(res)
