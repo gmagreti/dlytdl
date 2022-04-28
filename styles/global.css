@@ -8,7 +8,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-color: #1a1621;
+  background-color: #16121a;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
@@ -44,6 +44,7 @@ body {
 .app .app-content .options span  {
   font-weight: 700;
   background-color: #4a148c;
+  color: #d7d3ce;
   padding: 10px 20px;
   border-radius: 20px;
   cursor: pointer;
@@ -65,11 +66,12 @@ body {
 
 .app .app-content input {
   height: 3rem;
-
+  background-color: #181a1b;
   margin-bottom: 10px;
   border-radius: 8px;
   border: none;
   outline: none;
+  font-weight: bold;
 
   padding: 0 0.8rem;
 }
@@ -98,12 +100,12 @@ body {
 
 .app .app-content button.send {
   background-color: #4a148c;
-  color: #f3e5f5;
+  color: #d7d3ce;
 }
 
 .app .app-content button.reset {
   background-color: #03a9f4;
-  color: #f3e5f5;
+  color: #d7d3ce;
   width: 250px;
   align-self: center;
 }
