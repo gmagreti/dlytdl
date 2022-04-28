@@ -10,9 +10,10 @@ Download youtube video on mp3
 
 - [x] Loading
 - [x] Progress
-- [ ] Information
+- [x] Information
 - [x] MP3 or MP4
-- [ ] Thumbnail
-- [ ] Name
-- [ ] Cancel Download
-- [ ] Validar URL
+- [ ] Responsive
+- [x] Thumbnail
+- [x] Name
+- [x] Validar URL
+- [ ] Suporte para videos de + de 1h
