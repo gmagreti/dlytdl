@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import api from '../services/api'
 import Loading from 'react-loading'
-import { exec } from 'youtube-dl-exec'
 
 type ProgressData = {
   progress: number
@@ -18,14 +18,19 @@ export default function App() {
   async function sendURL() {
     if (isLoading) return
 
+    window.location.replace('http://localhost:3000/api' + '/download')
     setIsLoading(true)
 
     try {
-      const response = await exec(url)
-      console.log(response)
+      await api.get('/download', {
+        params: {
+          url: 'https://www.youtube.com/watch?v=_LLCz1FCWrY',
+        },
+      })
     } finally {
       setIsLoading(false)
     }
+
     // window.Main.sendMessage(`${url}||${format}`)
     // setIsLoading(true)
     // setProgress(null as unknown as ProgressData)
