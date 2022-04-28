@@ -16,4 +16,4 @@ Download youtube video on mp3
 - [x] Thumbnail
 - [x] Name
 - [x] Validar URL
-- [ ] Suporte para videos de + de 1h
+- [ ] Suporte para videos ou audios de + de 1h
