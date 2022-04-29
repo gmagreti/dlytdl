@@ -3,8 +3,8 @@ import Head from 'next/head'
 import Loading from 'react-loading'
 import io, { Socket } from 'socket.io-client'
 
-import * as utils from '../utils'
-import api from '../services/api'
+import api from '@/services/api'
+import * as utils from '@/utils'
 
 type ProgressDataApi = {
   percent: number
@@ -173,7 +173,7 @@ export default function App() {
           </div>
         )}
 
-        {progress?.percent === '100%' && (
+        {progress?.percent === '100%' && !isLoading && (
           <button className="info" style={{ width: 125, marginTop: 20 }} onClick={reset}>
             Reset
           </button>
