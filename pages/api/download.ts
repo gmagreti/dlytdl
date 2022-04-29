@@ -20,8 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let startTime: number
 
-    const options: ytdl.downloadOptions =
-      ext === 'mp3' ? { filter: 'audioonly', quality: 'highestaudio' } : { quality: 'highestvideo' }
+    const options: ytdl.downloadOptions = ext === 'mp3' ? { filter: 'audioonly' } : { filter: 'audioandvideo' }
 
     try {
       res.setHeader('Content-Disposition', `attachment; filename="${title}.${ext}"`)
