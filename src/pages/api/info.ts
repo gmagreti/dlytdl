@@ -5,7 +5,6 @@ import ytdl from 'ytdl-core'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    const io = (res?.socket as any).server?.io as Server
     const url = req.query.url as string
 
     const isValidUrl = ytdl.validateURL(url)
