@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).send({ message: 'URL is invalid' })
     }
 
-    const [_, urlID] = url?.split('watch?v=')
+    const urlID = ytdl.getVideoID(url)
 
     let startTime: number
 
