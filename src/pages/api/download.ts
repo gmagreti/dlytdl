@@ -10,13 +10,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const title = req.query.title as string
     const ext = req.query.ext as string
 
-    const isValidUrl = ytdl.validateURL(url)
+    const urlRegex =
+      /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
+
+    const isValidUrl = urlRegex.test(url)
 
     if (!isValidUrl) {
       return res.status(400).send({ message: 'URL is invalid' })
     }
 
-    const urlID = ytdl.getVideoID(url)
+    const value = ytdl.getVideoID(url)
 
     let startTime: number
 
@@ -24,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
       res.setHeader('Content-Disposition', `attachment; filename="${title}.${ext}"`)
-      const stream = ytdl(`https://www.youtube.com/watch?v=${urlID}`, options)
+      const stream = ytdl(`https://www.youtube.com/watch?v=${value}`, options)
 
       stream.once('response', () => {
         startTime = Date.now()

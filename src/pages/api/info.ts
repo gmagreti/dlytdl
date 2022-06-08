@@ -7,16 +7,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     const url = req.query.url as string
 
-    const isValidUrl = ytdl.validateURL(url)
+    const urlRegex =
+      /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
+
+    const isValidUrl = urlRegex.test(url)
 
     if (!isValidUrl) {
       return res.status(400).send({ message: 'URL is invalid' })
     }
 
-    const [_, urlID] = url?.split('watch?v=')
+    const value = ytdl.getVideoID(url)
 
     try {
-      const info = await ytdl.getInfo(`https://www.youtube.com/watch?v=${urlID}`)
+      const info = await ytdl.getInfo(`https://www.youtube.com/watch?v=${value}`)
 
       return res.status(200).send({
         title: info.videoDetails.title,
