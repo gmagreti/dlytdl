@@ -61,7 +61,7 @@ export default function App() {
       .catch((err) => console.log(err))
   }
 
-  async function sendURL() {
+  async function download() {
     if (isLoading || !url) return
     const title = info.title
     setIsLoading(true)
@@ -134,7 +134,7 @@ export default function App() {
             GET INFO
           </button>
         ) : (
-          <button className="send" onClick={() => sendURL()} disabled={isLoading || progress?.percent === '100%'}>
+          <button className="send" onClick={() => download()} disabled={isLoading || progress?.percent === '100%'}>
             DOWNLOAD
           </button>
         )}
