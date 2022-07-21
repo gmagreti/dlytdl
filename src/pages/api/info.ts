@@ -1,11 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Server } from 'socket.io'
 import ytdl from 'ytdl-core'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const url = req.query.url as string
+
+    console.log(url);
+    
 
     const urlRegex =
       /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
@@ -19,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const value = ytdl.getVideoID(url)
 
     try {
-      const info = await ytdl.getInfo(`https://www.youtube.com/watch?v=${value}`)
+      const info = await ytdl.getInfo(url)
 
       return res.status(200).send({
         title: info.videoDetails.title,

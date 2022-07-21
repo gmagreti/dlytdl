@@ -62,7 +62,7 @@ export default function App() {
   }
 
   async function download() {
-    if (isLoading || !url) return
+    // if (isLoading || !url) return
     const title = info.title
     setIsLoading(true)
     setInfo(null)
@@ -75,13 +75,16 @@ export default function App() {
           title,
         },
       })
+
+      console.log(response);
+      
       if (format === 'mp3') {
         utils.toMP3(response.data, title)
       } else {
         utils.toMP4(response.data, title)
       }
     } catch (err: any) {
-      alert('URL inválida')
+      alert(err)
       reset()
     } finally {
       setIsLoading(false)
@@ -99,6 +102,9 @@ export default function App() {
         },
       })
       setInfo(data)
+
+      console.log(data);
+      
     } catch (err: any) {
       alert('URL inválida')
       reset()
